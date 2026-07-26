@@ -49,7 +49,7 @@ export default function ServicesSection() {
     <section
       id="leistungen"
       ref={sectionRef}
-      className="relative overflow-hidden bg-navy-950 py-24"
+      className="relative overflow-x-hidden bg-navy-950 py-24"
       aria-labelledby="services-heading"
     >
       <div className="support-areas-mesh pointer-events-none absolute inset-0 opacity-60" aria-hidden />
@@ -67,7 +67,7 @@ export default function ServicesSection() {
           <div className="mx-auto mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-accent-500 to-transparent" />
         </div>
 
-        <div className="mt-16 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-4 lg:overflow-visible lg:px-0 xl:gap-5">
+        <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-5 lg:gap-4 xl:gap-5">
           {services.map((service, index) => {
             const ServiceIcon = service.icon;
             const isVisible = visible[index];
@@ -77,14 +77,14 @@ export default function ServicesSection() {
                 key={service.slug}
                 data-service-card
                 data-index={index}
-                className={`group relative flex h-full min-w-[min(82vw,17rem)] flex-shrink-0 snap-start lg:min-w-0 transition-all duration-700 ease-out ${
+                className={`group relative flex h-full transition-all duration-700 ease-out ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
                 <div className="home-card-glow absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
                 <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-navy-900/50 shadow-2xl shadow-black/30 backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-1 group-hover:border-accent-500/35">
-                  <div className="relative h-40 overflow-hidden sm:h-44 lg:h-36 xl:h-40">
+                  <div className="relative h-44 overflow-hidden sm:h-48 lg:h-36 xl:h-40">
                     <img
                       src={service.image}
                       alt=""
