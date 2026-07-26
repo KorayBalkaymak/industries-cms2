@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { CTASection } from '@/components/Sections';
+import BrandLogo from '@/components/BrandLogo';
 import HomeHeroBackdrop from '@/components/HomeHeroBackdrop';
 import ValuePillarsSection from '@/components/ValuePillarsSection';
 import ProjectCycleSection from '@/components/ProjectCycleSection';
@@ -20,25 +21,33 @@ export default function Home() {
         <HomeHeroBackdrop />
 
         <div className="container-px relative z-10 py-28 sm:py-32 lg:py-36">
-          <div className="max-w-xl animate-fade-up lg:max-w-2xl">
-            <p className="section-eyebrow">Engineering Services & Construction Management</p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.25rem] lg:leading-[1.06]">
-              Technische Expertise. Passende L{'\u00f6'}sungen. F{'\u00fc'}r Ihr Projekt.
-            </h1>
-            <p className="mt-6 text-base leading-relaxed text-navy-100/95 sm:text-lg lg:max-w-lg">
-              Industries CMS unterst{'\u00fc'}tzt Industrieunternehmen mit qualifizierten Engineering- und
-              Construction-Management-Dienstleistungen. Ob einzelne Spezialisten oder komplette
-              Projektteams {'\u2013'} flexibel, zuverl{'\u00e4'}ssig und projektbezogen.
-            </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link to="/#leistungen" className="btn-primary">
-                Unsere Leistungen
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link to="/kontakt" className="btn-ghost border-2 border-white/30 hover:bg-white/10">
-                Kontakt aufnehmen
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+            <div className="flex justify-center lg:justify-start">
+              <div className="home-hero-column-visual cms-hero-visual-float w-[min(72vw,16rem)] sm:w-[min(56vw,18rem)] lg:w-[min(36vw,20rem)] xl:w-[min(32vw,22rem)]">
+                <BrandLogo variant="hero" className="w-full justify-center" />
+              </div>
+            </div>
+
+            <div className="max-w-xl animate-fade-up lg:max-w-none lg:justify-self-end">
+              <p className="section-eyebrow">Engineering Services & Construction Management</p>
+              <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.25rem] lg:leading-[1.06]">
+                Technische Expertise. Passende L{'\u00f6'}sungen. F{'\u00fc'}r Ihr Projekt.
+              </h1>
+              <p className="mt-6 text-base leading-relaxed text-navy-100/95 sm:text-lg lg:max-w-xl">
+                Industries CMS unterst{'\u00fc'}tzt Industrieunternehmen mit qualifizierten Engineering- und
+                Construction-Management-Dienstleistungen. Ob einzelne Spezialisten oder komplette
+                Projektteams {'\u2013'} flexibel, zuverl{'\u00e4'}ssig und projektbezogen.
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link to="/#leistungen" className="btn-primary">
+                  Unsere Leistungen
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link to="/kontakt" className="btn-ghost border-2 border-white/30 hover:bg-white/10">
+                  Kontakt aufnehmen
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,4 @@
-import BrandLogo from '@/components/BrandLogo';
-
-/** Hero backdrop with CMS branding and floating logo visual. */
+/** Hero background effects only. */
 export default function HomeHeroBackdrop() {
   return (
     <div className="absolute inset-0 overflow-hidden bg-navy-950" aria-hidden>
@@ -20,18 +18,12 @@ export default function HomeHeroBackdrop() {
       />
 
       <div className="cms-hero-sweep absolute -left-1/4 top-0 h-full w-1/2 bg-gradient-to-r from-transparent via-accent-500/18 to-transparent" />
-      <div className="cms-hero-orb cms-hero-orb-a absolute -right-16 top-16 h-80 w-80 rounded-full bg-accent-500/25 blur-3xl" />
-      <div className="cms-hero-orb cms-hero-orb-b absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-orange-500/15 blur-3xl" />
+      <div className="cms-hero-orb cms-hero-orb-a absolute -left-16 top-16 h-80 w-80 rounded-full bg-accent-500/25 blur-3xl" />
+      <div className="cms-hero-orb cms-hero-orb-b absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-orange-500/15 blur-3xl" />
 
-      <div className="pointer-events-none absolute inset-0 flex items-end justify-center pb-10 sm:items-center sm:pb-0 lg:inset-y-0 lg:justify-end lg:pr-4 xl:pr-10">
-        <div className="home-hero-column-visual cms-hero-visual-float relative w-[min(72vw,14rem)] sm:w-[min(56vw,16rem)] lg:w-[min(28vw,18rem)] xl:w-[min(24vw,20rem)]">
-          <BrandLogo variant="hero" className="w-full justify-center" />
-        </div>
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-950 via-navy-950/93 via-[38%] to-navy-950/20 to-100% lg:to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-950/20 via-navy-950/88 via-[55%] to-navy-950" />
       <div className="absolute inset-0 bg-gradient-to-t from-navy-950/95 via-navy-950/10 to-navy-950/45" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_50%_at_68%_40%,rgba(255,87,34,0.32),transparent_58%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_50%_at_32%_42%,rgba(255,87,34,0.32),transparent_58%)]" />
     </div>
   );
 }

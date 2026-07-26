@@ -67,7 +67,7 @@ export default function ServicesSection() {
           <div className="mx-auto mt-5 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-accent-500 to-transparent" />
         </div>
 
-        <div className="mt-16 grid items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-16 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-4 lg:overflow-visible lg:px-0 xl:gap-5">
           {services.map((service, index) => {
             const ServiceIcon = service.icon;
             const isVisible = visible[index];
@@ -77,14 +77,14 @@ export default function ServicesSection() {
                 key={service.slug}
                 data-service-card
                 data-index={index}
-                className={`group relative flex h-full transition-all duration-700 ease-out ${
+                className={`group relative flex h-full min-w-[min(82vw,17rem)] flex-shrink-0 snap-start lg:min-w-0 transition-all duration-700 ease-out ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                 }`}
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
                 <div className="home-card-glow absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
                 <div className="relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-navy-900/50 shadow-2xl shadow-black/30 backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-1 group-hover:border-accent-500/35">
-                  <div className="relative h-52 overflow-hidden">
+                  <div className="relative h-40 overflow-hidden sm:h-44 lg:h-36 xl:h-40">
                     <img
                       src={service.image}
                       alt=""
@@ -93,22 +93,22 @@ export default function ServicesSection() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/35 to-navy-950/10" />
                     <div className="absolute inset-0 bg-gradient-to-br from-accent-500/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                    <span className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-lg shadow-accent-500/35 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
-                      <ServiceIcon className="h-6 w-6" strokeWidth={1.75} />
+                    <span className="absolute left-3 top-3 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-lg shadow-accent-500/35 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3 lg:left-4 lg:top-4">
+                      <ServiceIcon className="h-5 w-5" strokeWidth={1.75} />
                     </span>
-                    <span className="absolute right-5 top-5 rounded-full border border-white/15 bg-navy-950/50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-white/80 backdrop-blur-sm">
+                    <span className="absolute right-3 top-3 rounded-full border border-white/15 bg-navy-950/50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/80 backdrop-blur-sm lg:right-4 lg:top-4">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <h3 className="text-lg font-bold text-white">{service.title}</h3>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-navy-300">{service.short}</p>
+                  <div className="flex flex-1 flex-col p-4 sm:p-5 lg:p-4 xl:p-5">
+                    <h3 className="text-base font-bold leading-snug text-white lg:text-[0.95rem] xl:text-base">{service.title}</h3>
+                    <p className="mt-2 flex-1 text-xs leading-relaxed text-navy-300 sm:text-sm lg:mt-2.5 lg:text-xs xl:text-sm">{service.short}</p>
                     <Link
                       to={`/leistungen/${service.slug}`}
-                      className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-accent-400 transition-colors hover:text-accent-300"
+                      className="mt-4 inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-accent-400 transition-colors hover:text-accent-300 sm:mt-5 lg:mt-4"
                     >
                       Mehr erfahren
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
                 </div>
