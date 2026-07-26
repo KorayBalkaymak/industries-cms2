@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@property --team-border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans bg-white text-navy-900 antialiased;
+  }
+}
+
+@layer components {
+  .container-px {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-md bg-accent-500 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-accent-500/20 transition-all hover:bg-accent-600 hover:shadow-accent-500/30 active:scale-[0.98];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-md border-2 border-navy-900 bg-transparent px-6 py-3 text-sm font-bold uppercase tracking-wide text-navy-900 transition-all hover:bg-navy-900 hover:text-white active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-all hover:bg-white/10 active:scale-[0.98];
+  }
+  .section-title {
+    @apply text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl;
+  }
+  .section-eyebrow {
+    @apply text-sm font-bold uppercase tracking-widest text-accent-500;
+  }
+  .support-areas-mesh {
+    background:
+      radial-gradient(circle at 20% 30%, rgba(255, 87, 34, 0.22) 0, transparent 42%),
+      radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.12) 0, transparent 40%);
+    animation: mesh-drift 14s ease-in-out infinite;
+  }
+  .support-area-card-glow {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.55), rgba(255, 255, 255, 0.08), rgba(255, 87, 34, 0.35));
+  }
+  .cms-hero-mesh {
+    background:
+      radial-gradient(circle at 15% 25%, rgba(255, 87, 34, 0.28) 0, transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.08) 0, transparent 40%),
+      radial-gradient(circle at 60% 40%, rgba(30, 58, 138, 0.35) 0, transparent 50%);
+    animation: cms-hero-mesh-drift 16s ease-in-out infinite;
+  }
+  .cms-hero-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at 30% 40%, black 10%, transparent 72%);
+  }
+  .cms-hero-pattern {
+    background-size: 160px 120px;
+    animation: cms-hero-pattern-drift 28s linear infinite;
+  }
+  .cms-hero-sweep {
+    animation: cms-hero-sweep 9s ease-in-out infinite;
+  }
+  .cms-hero-orb-a {
+    animation: cms-hero-orb-float 11s ease-in-out infinite;
+  }
+  .cms-hero-orb-b {
+    animation: cms-hero-orb-float 13s ease-in-out infinite reverse;
+  }
+  .cms-hero-orb-c {
+    animation: cms-hero-orb-float 10s ease-in-out infinite;
+    animation-delay: -3s;
+  }
+  .cms-hero-logo-float {
+    animation: cms-hero-logo-float 8s ease-in-out infinite;
+  }
+  .cms-hero-visual-float {
+    animation: cms-hero-logo-float 8s ease-in-out infinite;
+  }
+  .cms-hero-ring-spin {
+    animation: cms-hero-ring-spin 22s linear infinite;
+  }
+  .cms-hero-ring-spin-reverse {
+    animation: cms-hero-ring-spin 16s linear infinite reverse;
+  }
+  .cms-hero-node-pulse {
+    animation: cms-hero-node-pulse 2.8s ease-in-out infinite;
+  }
+  .collab-step-glow {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.25), rgba(255, 255, 255, 0), rgba(11, 19, 43, 0.08));
+  }
+  .scope-panel-glow {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.2), rgba(255, 255, 255, 0.5), rgba(11, 19, 43, 0.06));
+  }
+  .home-card-glow {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.5), rgba(255, 255, 255, 0.06), rgba(255, 87, 34, 0.28));
+  }
+  .home-card-glow-light {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.35), rgba(255, 255, 255, 0.5), rgba(11, 19, 43, 0.08));
+  }
+  .deployment-accent-orbit {
+    background: conic-gradient(
+      from 0deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.08)
+    );
+    animation: cms-hero-ring-spin 10s linear infinite;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .group:hover .deployment-accent-orbit {
+    opacity: 1;
+  }
+  .value-pillar-card-glow {
+    background: linear-gradient(135deg, rgba(255, 87, 34, 0.5), rgba(255, 255, 255, 0.06), rgba(255, 87, 34, 0.3));
+  }
+  .team-alt-border-wrap {
+    isolation: isolate;
+    background: #0b132b;
+    box-shadow:
+      0 0 0 1px rgba(255, 87, 34, 0.15),
+      0 0 32px rgba(255, 87, 34, 0.22),
+      0 24px 48px rgba(11, 19, 43, 0.35);
+  }
+  .team-alt-border-orbit {
+    background: conic-gradient(
+      from var(--team-border-angle),
+      rgba(255, 87, 34, 0.08) 0deg,
+      transparent 200deg,
+      rgba(255, 87, 34, 0.45) 220deg,
+      rgba(255, 87, 34, 0.95) 250deg,
+      #ff5722 270deg,
+      #ff8a50 285deg,
+      #ff5722 300deg,
+      rgba(255, 87, 34, 0.85) 320deg,
+      rgba(255, 87, 34, 0.35) 340deg,
+      rgba(255, 87, 34, 0.08) 360deg
+    );
+    animation: team-border-orbit 3.8s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(255, 87, 34, 0.75));
+  }
+  .home-hero-column-visual {
+    filter: drop-shadow(0 0 28px rgba(255, 87, 34, 0.2));
+  }
+  .home-hero-orbit-spin {
+    animation: cms-hero-ring-spin 24s linear infinite;
+  }
+  .home-hero-orbit-spin-reverse {
+    animation: cms-hero-ring-spin 17s linear infinite reverse;
+  }
+  .home-hero-band-pulse {
+    animation: cms-hero-node-pulse 3.2s ease-in-out infinite;
+  }
+  .home-hero-stack-glow {
+    animation: home-hero-stack-glow 4s ease-in-out infinite;
+  }
+  .home-hero-flare-pulse {
+    animation: home-hero-flare-pulse 2.5s ease-in-out infinite;
+    transform-origin: 200px 35px;
+  }
+  .home-hero-pipe-flow {
+    stroke-dasharray: 8 14;
+    animation: home-hero-pipe-flow 5s linear infinite;
+  }
+  .home-hero-column-glow {
+    animation: home-hero-glow-pulse 6s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  @keyframes mesh-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(2%, -3%, 0) scale(1.06);
+    }
+  }
+  @keyframes cms-hero-pattern-drift {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 160px 120px;
+    }
+  }
+  @keyframes cms-hero-mesh-drift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(3%, -2%, 0) scale(1.08);
+    }
+  }
+  @keyframes cms-hero-sweep {
+    0%,
+    100% {
+      transform: translateX(-30%) skewX(-12deg);
+      opacity: 0.35;
+    }
+    50% {
+      transform: translateX(120%) skewX(-12deg);
+      opacity: 0.85;
+    }
+  }
+  @keyframes cms-hero-orb-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -18px, 0);
+    }
+  }
+  @keyframes cms-hero-logo-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -10px, 0);
+    }
+  }
+  @keyframes cms-hero-ring-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes cms-hero-node-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes team-border-orbit {
+    to {
+      --team-border-angle: 360deg;
+    }
+  }
+  @keyframes home-hero-glow-pulse {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: translateX(-50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.08);
+    }
+  }
+  @keyframes home-hero-stack-glow {
+    0%,
+    100% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  @keyframes home-hero-flare-pulse {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scaleY(0.92);
+    }
+    50% {
+      opacity: 0.95;
+      transform: scaleY(1.08);
+    }
+  }
+  @keyframes home-hero-pipe-flow {
+    to {
+      stroke-dashoffset: -44;
+    }
+  }
+  @keyframes cycle-connector-arrow-pulse {
+    0%,
+    100% {
+      transform: translateX(0);
+      filter: drop-shadow(0 0 0 rgba(255, 87, 34, 0));
+    }
+    50% {
+      transform: translateX(2px);
+      filter: drop-shadow(0 0 6px rgba(255, 87, 34, 0.65));
+    }
+  }
+  .cycle-connector-arrow-active {
+    animation: cycle-connector-arrow-pulse 1.8s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cms-hero-mesh,
+    .cms-hero-pattern,
+    .cms-hero-sweep,
+    .cms-hero-orb-a,
+    .cms-hero-orb-b,
+    .cms-hero-orb-c,
+    .cms-hero-logo-float,
+    .cms-hero-visual-float,
+    .cms-hero-ring-spin,
+    .cms-hero-ring-spin-reverse,
+    .cms-hero-node-pulse {
+      animation: none !important;
+    }
+    .team-alt-border-orbit {
+      animation: none !important;
+      filter: none;
+      background: linear-gradient(135deg, rgba(255, 87, 34, 0.85), rgba(255, 138, 80, 0.55), rgba(255, 87, 34, 0.75));
+    }
+    .home-hero-orbit-spin,
+    .home-hero-orbit-spin-reverse,
+    .home-hero-band-pulse,
+    .home-hero-stack-glow,
+    .home-hero-flare-pulse,
+    .home-hero-pipe-flow,
+    .home-hero-column-glow,
+    .cycle-connector-arrow-active {
+      animation: none !important;
+    }
+  }
+}
