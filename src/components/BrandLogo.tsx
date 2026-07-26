@@ -7,27 +7,27 @@ export default function BrandLogo({ className = '', variant = 'header' }: BrandL
   if (variant === 'hero') {
     return (
       <div
-        className={`group relative inline-flex ${className}`}
+        className={`group relative inline-flex aspect-square w-full items-center justify-center ${className}`}
         aria-label="Industries CMS – Construction Management Solution"
       >
         <div
-          className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-accent-500/25 blur-3xl home-hero-column-glow"
+          className="pointer-events-none absolute -inset-8 rounded-full bg-accent-400/50 blur-3xl home-hero-column-glow"
           aria-hidden
         />
         <div
-          className="pointer-events-none absolute -inset-3 rounded-[1.75rem] border border-accent-500/30 opacity-70 home-hero-logo-ring"
+          className="pointer-events-none absolute -inset-5 rounded-full bg-white/20 blur-2xl home-hero-logo-halo"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -inset-2 rounded-full border-2 border-accent-400/70 opacity-90 home-hero-logo-ring"
           aria-hidden
         />
 
-        <div className="relative overflow-hidden rounded-2xl bg-white p-5 shadow-[0_20px_60px_rgba(0,0,0,0.35)] ring-2 ring-accent-500 sm:p-6">
-          <div
-            className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-500/40"
-            aria-hidden
-          />
+        <div className="relative flex aspect-square w-full items-center justify-center rounded-full bg-white p-6 shadow-[0_0_50px_rgba(255,87,34,0.45)] ring-2 ring-accent-400 sm:p-7">
           <img
             src="/images/industries-cms-logo.png"
             alt="Industries CMS – Construction Management Solution"
-            className="relative mx-auto h-auto w-full max-w-[11rem] object-contain sm:max-w-[13rem] lg:max-w-[14rem]"
+            className="relative h-auto w-[78%] max-w-[10rem] object-contain sm:max-w-[11rem]"
             draggable={false}
           />
         </div>

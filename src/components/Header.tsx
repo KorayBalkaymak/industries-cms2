@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ChevronDown, Menu, X } from 'lucide-react';
-import BrandLogo from '@/components/BrandLogo';
 import { navItems } from '@/data';
 
 export default function Header() {
@@ -19,12 +18,8 @@ export default function Header() {
     <header className="relative z-50 border-b border-navy-800/80 bg-navy-950">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-500/35 to-transparent" aria-hidden />
       <div className="container-px">
-        <div className="flex h-[5.25rem] items-center justify-between">
-          <Link to="/" className="relative z-10 flex-shrink-0">
-            <BrandLogo variant="header" />
-          </Link>
-
-          <nav className="hidden items-center gap-1 lg:flex">
+        <div className="flex h-[5.25rem] items-center">
+          <nav className="hidden flex-1 items-center gap-1 lg:flex">
             {navItems.map((item) =>
               item.children ? (
                 <div
@@ -80,7 +75,7 @@ export default function Header() {
 
           <button
             onClick={() => setMobileOpen((v) => !v)}
-            className="rounded-md p-2 text-white lg:hidden"
+            className="ml-auto rounded-md p-2 text-white lg:hidden"
             aria-label="Menü"
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
