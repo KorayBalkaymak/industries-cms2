@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { navItems } from '@/data';
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    setMobileOpen(false);
     setServicesOpen(false);
   }, [location.pathname]);
 
@@ -18,8 +15,8 @@ export default function Header() {
     <header className="relative z-50 border-b border-navy-800/80 bg-navy-950">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-500/35 to-transparent" aria-hidden />
       <div className="container-px">
-        <div className="flex h-[5.25rem] items-center">
-          <nav className="hidden flex-1 items-center gap-1 lg:flex">
+        <div className="flex min-h-[4.5rem] items-center py-2 sm:min-h-[5.25rem] sm:py-0">
+          <nav className="flex flex-1 flex-wrap items-center gap-0.5 sm:gap-1">
             {navItems.map((item) =>
               item.children ? (
                 <div
@@ -30,17 +27,18 @@ export default function Header() {
                 >
                   <button
                     type="button"
-                    className={`flex items-center gap-1 rounded-md px-4 py-2 text-sm font-semibold transition-colors ${
+                    onClick={() => setServicesOpen((open) => !open)}
+                    className={`flex items-center gap-0.5 rounded-md px-2 py-2 text-xs font-semibold transition-colors sm:gap-1 sm:px-4 sm:text-sm ${
                       location.pathname.startsWith('/leistungen')
                         ? 'text-accent-400'
                         : 'text-white hover:text-accent-400'
                     }`}
                   >
                     {item.label}
-                    <ChevronDown className={`h-4 w-4 transition-transform ${servicesOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${servicesOpen ? 'rotate-180' : ''}`} />
                   </button>
                   <div
-                    className={`absolute left-0 top-full w-72 origin-top pt-2 transition-all ${
+                    className={`absolute left-0 top-full z-50 w-72 origin-top pt-2 transition-all ${
                       servicesOpen ? 'visible opacity-100' : 'invisible opacity-0'
                     }`}
                   >
@@ -62,7 +60,7 @@ export default function Header() {
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `rounded-md px-4 py-2 text-sm font-semibold transition-colors ${
+                    `rounded-md px-2 py-2 text-xs font-semibold transition-colors sm:px-4 sm:text-sm ${
                       isActive ? 'text-accent-400' : 'text-white hover:text-accent-400'
                     }`
                   }
@@ -72,62 +70,7 @@ export default function Header() {
               ),
             )}
           </nav>
-
-          <button
-            onClick={() => setMobileOpen((v) => !v)}
-            className="ml-auto rounded-md p-2 text-white lg:hidden"
-            aria-label="Menü"
-          >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
         </div>
-      </div>
-
-      <div
-        className={`overflow-hidden bg-navy-950 transition-all duration-300 lg:hidden ${
-          mobileOpen ? 'max-h-[600px] border-t border-navy-800' : 'max-h-0'
-        }`}
-      >
-        <nav className="container-px flex flex-col gap-1 py-4">
-          {navItems.map((item) =>
-            item.children ? (
-              <div key={item.label}>
-                <button
-                  onClick={() => setMobileServicesOpen((v) => !v)}
-                  className="flex w-full items-center justify-between rounded-md px-4 py-3 text-base font-semibold text-white"
-                >
-                  {item.label}
-                  <ChevronDown className={`h-5 w-5 transition-transform ${mobileServicesOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {mobileServicesOpen && (
-                  <div className="ml-4 flex flex-col border-l border-navy-700 pl-3">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.to}
-                        to={child.to}
-                        className="rounded-md px-4 py-2.5 text-sm font-medium text-navy-200 hover:text-accent-400"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) =>
-                  `rounded-md px-4 py-3 text-base font-semibold ${
-                    isActive ? 'text-accent-400' : 'text-white hover:text-accent-400'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ),
-          )}
-        </nav>
       </div>
     </header>
   );
