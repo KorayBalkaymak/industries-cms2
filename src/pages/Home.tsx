@@ -15,7 +15,7 @@ export default function Home() {
       {/* 1. HERO */}
       <section
         className="relative flex min-h-[100svh] min-h-screen items-center overflow-hidden bg-navy-950"
-        aria-label="Industries CMS Hero mit Raffinerie-Kolonne und Orbital-Animation"
+        aria-label="Industries CMS Hero"
       >
         <HomeHeroBackdrop />
 

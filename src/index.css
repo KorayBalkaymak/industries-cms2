@@ -172,6 +172,9 @@
   .home-hero-column-glow {
     animation: home-hero-glow-pulse 6s ease-in-out infinite;
   }
+  .home-hero-logo-ring {
+    animation: home-hero-logo-ring 4s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
@@ -253,11 +256,22 @@
     0%,
     100% {
       opacity: 0.55;
-      transform: translateX(-50%) scale(1);
+      transform: scale(1);
     }
     50% {
       opacity: 1;
-      transform: translateX(-50%) scale(1.08);
+      transform: scale(1.06);
+    }
+  }
+  @keyframes home-hero-logo-ring {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(0.98);
+    }
+    50% {
+      opacity: 0.9;
+      transform: scale(1.03);
     }
   }
   @keyframes home-hero-stack-glow {
