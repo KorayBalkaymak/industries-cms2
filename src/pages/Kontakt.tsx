@@ -78,13 +78,40 @@ function useReveal(count: number) {
   return { sectionRef, visible };
 }
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xlgqavrd';
+
 export default function Kontakt() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { sectionRef, visible } = useReveal(contactItems.length + 2);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
+    setSubmitting(true);
+    setError(null);
+
+    const form = e.currentTarget;
+
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json()) as { error?: string };
+        throw new Error(data.error ?? 'Beim Senden ist ein Fehler aufgetreten.');
+      }
+
+      form.reset();
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Beim Senden ist ein Fehler aufgetreten.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -224,7 +251,13 @@ export default function Kontakt() {
                     <p className="mt-3 max-w-md text-base leading-relaxed text-navy-500">
                       Ihre Anfrage ist eingegangen. Wir melden uns schnellstm{'\u00f6'}glich bei Ihnen.
                     </p>
-                    <button onClick={() => setSent(false)} className="btn-secondary mt-10">
+                    <button
+                      onClick={() => {
+                        setSent(false);
+                        setError(null);
+                      }}
+                      className="btn-secondary mt-10"
+                    >
                       Neue Anfrage stellen
                     </button>
                   </div>
@@ -239,49 +272,99 @@ export default function Kontakt() {
                     <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                       <div className="grid gap-5 sm:grid-cols-2">
                         <div>
-                          <label className="mb-2 block text-sm font-semibold text-navy-800">Name *</label>
-                          <input required type="text" className={inputClass} placeholder="Ihr Name" />
+                          <label htmlFor="kontakt-name" className="mb-2 block text-sm font-semibold text-navy-800">
+                            Name *
+                          </label>
+                          <input
+                            id="kontakt-name"
+                            name="name"
+                            required
+                            type="text"
+                            className={inputClass}
+                            placeholder="Ihr Name"
+                          />
                         </div>
                         <div>
-                          <label className="mb-2 block text-sm font-semibold text-navy-800">Unternehmen</label>
-                          <input type="text" className={inputClass} placeholder="Ihr Unternehmen" />
+                          <label htmlFor="kontakt-company" className="mb-2 block text-sm font-semibold text-navy-800">
+                            Unternehmen
+                          </label>
+                          <input
+                            id="kontakt-company"
+                            name="company"
+                            type="text"
+                            className={inputClass}
+                            placeholder="Ihr Unternehmen"
+                          />
                         </div>
                       </div>
                       <div className="grid gap-5 sm:grid-cols-2">
                         <div>
-                          <label className="mb-2 block text-sm font-semibold text-navy-800">E-Mail *</label>
-                          <input required type="email" className={inputClass} placeholder="ihre@email.de" />
+                          <label htmlFor="kontakt-email" className="mb-2 block text-sm font-semibold text-navy-800">
+                            E-Mail *
+                          </label>
+                          <input
+                            id="kontakt-email"
+                            name="email"
+                            required
+                            type="email"
+                            className={inputClass}
+                            placeholder="ihre@email.de"
+                          />
                         </div>
                         <div>
-                          <label className="mb-2 block text-sm font-semibold text-navy-800">Telefon</label>
-                          <input type="tel" className={inputClass} placeholder="+49 ..." />
+                          <label htmlFor="kontakt-phone" className="mb-2 block text-sm font-semibold text-navy-800">
+                            Telefon
+                          </label>
+                          <input
+                            id="kontakt-phone"
+                            name="phone"
+                            type="tel"
+                            className={inputClass}
+                            placeholder="+49 ..."
+                          />
                         </div>
                       </div>
                       <div>
-                        <label className="mb-2 block text-sm font-semibold text-navy-800">Leistungsbereich</label>
-                        <select className={inputClass}>
-                          <option>Bitte w{'\u00e4'}hlen</option>
+                        <label htmlFor="kontakt-service" className="mb-2 block text-sm font-semibold text-navy-800">
+                          Leistungsbereich
+                        </label>
+                        <select id="kontakt-service" name="leistungsbereich" className={inputClass} defaultValue="">
+                          <option value="" disabled>
+                            Bitte w{'\u00e4'}hlen
+                          </option>
                           {services.map((s) => (
-                            <option key={s.slug}>{s.title}</option>
+                            <option key={s.slug} value={s.title}>
+                              {s.title}
+                            </option>
                           ))}
-                          <option>Komplettes Team</option>
-                          <option>Sonstiges</option>
+                          <option value="Komplettes Team">Komplettes Team</option>
+                          <option value="Sonstiges">Sonstiges</option>
                         </select>
                       </div>
                       <div>
-                        <label className="mb-2 block text-sm font-semibold text-navy-800">Nachricht *</label>
+                        <label htmlFor="kontakt-message" className="mb-2 block text-sm font-semibold text-navy-800">
+                          Nachricht *
+                        </label>
                         <textarea
+                          id="kontakt-message"
+                          name="message"
                           required
                           rows={5}
                           className={`${inputClass} resize-none`}
                           placeholder="Beschreiben Sie Ihren Bedarf ..."
                         />
                       </div>
+                      {error ? (
+                        <p className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+                          {error}
+                        </p>
+                      ) : null}
                       <button
                         type="submit"
-                        className="group flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-xl shadow-accent-500/25 transition-all hover:-translate-y-0.5 hover:bg-accent-600"
+                        disabled={submitting}
+                        className="group flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-xl shadow-accent-500/25 transition-all hover:-translate-y-0.5 hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
                       >
-                        Anfrage senden
+                        {submitting ? 'Wird gesendet …' : 'Anfrage senden'}
                         <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                       </button>
                     </form>
