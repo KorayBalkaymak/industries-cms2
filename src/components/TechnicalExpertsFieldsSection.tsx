@@ -9,7 +9,7 @@ type ExpertFieldsData = {
   additional: { icon: LucideIcon; title: string }[];
 };
 
-function useReveal(total: number) {
+function useReveal(total: number, batchRevealFrom?: number) {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState<boolean[]>(() => Array(total).fill(false));
 
@@ -34,28 +34,38 @@ function useReveal(total: number) {
             if (prev[index]) return prev;
             const next = [...prev];
             next[index] = true;
+            if (batchRevealFrom !== undefined && index === batchRevealFrom) {
+              for (let i = batchRevealFrom + 1; i < total; i++) {
+                next[i] = true;
+              }
+            }
             return next;
           });
         });
       },
-      { rootMargin: '-5% 0px -5% 0px', threshold: 0.1 },
+      {
+        root: null,
+        rootMargin: '0px 0px 12% 0px',
+        threshold: [0, 0.08, 0.2],
+      },
     );
 
     items.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [total]);
+  }, [total, batchRevealFrom]);
 
   return { sectionRef, visible };
 }
 
 export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFieldsData }) {
-  const totalItems = data.columns.length + data.additional.length + 1;
-  const { sectionRef, visible } = useReveal(totalItems);
+  const totalItems = data.columns.length + data.additional.length + 2;
+  const additionalTitleIndex = data.columns.length + 1;
+  const { sectionRef, visible } = useReveal(totalItems, additionalTitleIndex);
 
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-navy-950 py-24"
+      className="relative overflow-x-hidden bg-navy-950 py-24"
       aria-labelledby="expert-fields-heading"
     >
       <div className="support-areas-mesh pointer-events-none absolute inset-0 opacity-60" aria-hidden />
@@ -108,7 +118,13 @@ export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFi
                 />
                 <div className="relative flex h-full w-full flex-col rounded-2xl border border-white/10 bg-navy-900/55 p-5 shadow-xl shadow-black/25 backdrop-blur-md transition-all duration-500 group-hover:-translate-y-1 group-hover:border-accent-500/35 sm:p-6">
                   <div className="flex items-center gap-3 border-b border-white/10 pb-4">
-                    <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-lg shadow-accent-500/30 transition-transform duration-500 group-hover:scale-110">
+                    <span
+                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl shadow-lg transition-all duration-500 group-hover:scale-110 ${
+                        isVisible
+                          ? 'bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-accent-500/30'
+                          : 'border border-white/10 bg-navy-950/60 text-accent-400'
+                      }`}
+                    >
                       <ColumnIcon className="h-5 w-5" strokeWidth={1.75} />
                     </span>
                     <h3 className="text-sm font-bold leading-snug text-white sm:text-base">{column.title}</h3>
@@ -134,19 +150,21 @@ export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFi
           })}
         </div>
 
-        <div
-          data-expert-item
-          data-index={data.columns.length + 1}
-          className={`mt-14 transition-all duration-700 ease-out ${
-            visible[data.columns.length + 1] ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}
-        >
-          <div className="flex items-center gap-4">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden />
-            <h3 className="text-center text-sm font-bold uppercase tracking-[0.24em] text-accent-400">
-              {data.additionalTitle}
-            </h3>
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden />
+        <div className="mt-14">
+          <div
+            data-expert-item
+            data-index={additionalTitleIndex}
+            className={`transition-all duration-700 ease-out ${
+              visible[additionalTitleIndex] ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+            }`}
+          >
+            <div className="flex items-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden />
+              <h3 className="text-center text-sm font-bold uppercase tracking-[0.24em] text-accent-400">
+                {data.additionalTitle}
+              </h3>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/15 to-transparent" aria-hidden />
+            </div>
           </div>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -161,15 +179,25 @@ export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFi
                   data-expert-item
                   data-index={itemIndex}
                   className={`group relative transition-all duration-700 ease-out ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
                   }`}
-                  style={{ transitionDelay: `${index * 50}ms` }}
+                  style={{ transitionDelay: `${index * 70}ms` }}
                 >
                   <div className="relative flex items-center gap-4 rounded-xl border border-white/10 bg-navy-900/45 px-4 py-4 shadow-lg shadow-black/20 backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-0.5 group-hover:border-accent-500/35 group-hover:bg-navy-900/70">
-                    <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-navy-950/60 text-accent-400 transition-all duration-500 group-hover:border-accent-500/30 group-hover:bg-accent-500/15 group-hover:text-accent-300">
+                    <span
+                      className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-all duration-500 ${
+                        isVisible
+                          ? 'bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-lg shadow-accent-500/30'
+                          : 'border border-white/10 bg-navy-950/60 text-accent-400/70'
+                      }`}
+                    >
                       <ItemIcon className="h-5 w-5" strokeWidth={1.75} />
                     </span>
-                    <span className="text-sm font-semibold leading-snug text-navy-100 transition-colors duration-300 group-hover:text-white">
+                    <span
+                      className={`text-sm font-semibold leading-snug transition-colors duration-500 ${
+                        isVisible ? 'text-white' : 'text-navy-300'
+                      }`}
+                    >
                       {item.title}
                     </span>
                   </div>
