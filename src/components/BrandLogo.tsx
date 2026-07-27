@@ -27,7 +27,7 @@ export default function BrandLogo({ className = '', variant = 'header' }: BrandL
           <img
             src="/images/industries-cms-logo.png"
             alt="Industries CMS – Construction Management Solution"
-            className="relative h-full w-full scale-[1.34] object-contain sm:scale-[1.38]"
+            className="relative h-full w-full scale-[1.28] object-contain sm:scale-[1.32]"
             draggable={false}
           />
         </div>
