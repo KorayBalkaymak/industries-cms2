@@ -60,7 +60,7 @@ function useReveal(total: number, batchRevealFrom?: number) {
 export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFieldsData }) {
   const totalItems = data.columns.length + data.additional.length + 2;
   const additionalTitleIndex = data.columns.length + 1;
-  const { sectionRef, visible } = useReveal(totalItems, additionalTitleIndex);
+  const { sectionRef, visible } = useReveal(totalItems);
 
   return (
     <section
@@ -119,10 +119,10 @@ export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFi
                 <div className="relative flex h-full w-full flex-col rounded-2xl border border-white/10 bg-navy-900/55 p-5 shadow-xl shadow-black/25 backdrop-blur-md transition-all duration-500 group-hover:-translate-y-1 group-hover:border-accent-500/35 sm:p-6">
                   <div className="flex items-center gap-3 border-b border-white/10 pb-4">
                     <span
-                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl shadow-lg transition-all duration-500 group-hover:scale-110 ${
+                      className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl transition-all duration-700 group-hover:scale-110 ${
                         isVisible
-                          ? 'bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-accent-500/30'
-                          : 'border border-white/10 bg-navy-950/60 text-accent-400'
+                          ? 'border border-white/15 bg-white/10 text-accent-400 shadow-[0_0_22px_rgba(255,255,255,0.14)]'
+                          : 'border border-white/10 bg-navy-950/60 text-accent-400/70'
                       }`}
                     >
                       <ColumnIcon className="h-5 w-5" strokeWidth={1.75} />
@@ -178,24 +178,36 @@ export default function TechnicalExpertsFieldsSection({ data }: { data: ExpertFi
                   key={item.title}
                   data-expert-item
                   data-index={itemIndex}
-                  className={`group relative transition-all duration-700 ease-out ${
+                  className={`group relative overflow-hidden rounded-xl transition-all duration-700 ease-out ${
                     isVisible ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
                   }`}
                   style={{ transitionDelay: `${index * 70}ms` }}
                 >
-                  <div className="relative flex items-center gap-4 rounded-xl border border-white/10 bg-navy-900/45 px-4 py-4 shadow-lg shadow-black/20 backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-0.5 group-hover:border-accent-500/35 group-hover:bg-navy-900/70">
+                  <div
+                    className={`pointer-events-none absolute inset-0 rounded-xl expert-card-ambient-glow transition-opacity duration-700 ${
+                      isVisible ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    aria-hidden
+                  />
+                  <div
+                    className={`pointer-events-none absolute inset-0 rounded-xl expert-card-shimmer ${
+                      isVisible ? 'expert-card-shimmer-active' : ''
+                    }`}
+                    aria-hidden
+                  />
+                  <div className="relative flex items-center gap-4 rounded-xl border border-white/10 bg-navy-900/45 px-4 py-4 shadow-lg shadow-black/20 backdrop-blur-sm transition-all duration-500 group-hover:-translate-y-0.5 group-hover:border-white/20 group-hover:bg-navy-900/70 group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
                     <span
-                      className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-all duration-500 ${
+                      className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg transition-all duration-700 ${
                         isVisible
-                          ? 'bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-lg shadow-accent-500/30'
-                          : 'border border-white/10 bg-navy-950/60 text-accent-400/70'
+                          ? 'border border-white/15 bg-white/10 text-accent-400 shadow-[0_0_20px_rgba(255,255,255,0.12)]'
+                          : 'border border-white/10 bg-navy-950/60 text-accent-400/60'
                       }`}
                     >
                       <ItemIcon className="h-5 w-5" strokeWidth={1.75} />
                     </span>
                     <span
-                      className={`text-sm font-semibold leading-snug transition-colors duration-500 ${
-                        isVisible ? 'text-white' : 'text-navy-300'
+                      className={`text-sm font-semibold leading-snug transition-colors duration-700 ${
+                        isVisible ? 'text-white' : 'text-navy-400'
                       }`}
                     >
                       {item.title}

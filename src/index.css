@@ -45,6 +45,39 @@
   .support-area-card-glow {
     background: linear-gradient(135deg, rgba(255, 87, 34, 0.55), rgba(255, 255, 255, 0.08), rgba(255, 87, 34, 0.35));
   }
+  .expert-card-ambient-glow {
+    background:
+      radial-gradient(circle at 25% 50%, rgba(255, 255, 255, 0.1) 0, transparent 52%),
+      radial-gradient(circle at 75% 50%, rgba(255, 255, 255, 0.06) 0, transparent 48%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+  .expert-card-shimmer {
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.04) 42%,
+      rgba(255, 255, 255, 0.22) 50%,
+      rgba(255, 255, 255, 0.04) 58%,
+      transparent 65%
+    );
+    opacity: 0;
+  }
+  .expert-card-shimmer-active {
+    animation: expert-card-shimmer 1.35s ease-out forwards;
+  }
+  @keyframes expert-card-shimmer {
+    0% {
+      transform: translateX(-130%);
+      opacity: 0;
+    }
+    18% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(130%);
+      opacity: 0;
+    }
+  }
   .cms-hero-mesh {
     background:
       radial-gradient(circle at 15% 25%, rgba(255, 87, 34, 0.28) 0, transparent 45%),
@@ -353,7 +386,8 @@
     .home-hero-flare-pulse,
     .home-hero-pipe-flow,
     .home-hero-column-glow,
-    .cycle-connector-arrow-active {
+    .cycle-connector-arrow-active,
+    .expert-card-shimmer-active {
       animation: none !important;
     }
   }
