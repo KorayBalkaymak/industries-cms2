@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { MapPin, Phone, Mail, Send, Check, Clock, MessageSquare, Zap } from 'lucide-react';
 import CmsHeroBackdrop from '@/components/CmsHeroBackdrop';
 import { company, services } from '@/data';
@@ -84,26 +84,24 @@ export default function Kontakt() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const formPanelRef = useRef<HTMLDivElement>(null);
+  const scrollLockRef = useRef<number | null>(null);
   const { sectionRef, visible } = useReveal(contactItems.length + 2);
 
-  useEffect(() => {
-    if (!sent) return;
+  useLayoutEffect(() => {
+    if (!sent || scrollLockRef.current === null) return;
 
-    const panel = formPanelRef.current;
-    if (!panel) return;
+    const lockedY = scrollLockRef.current;
+    const restoreScroll = () => window.scrollTo(0, lockedY);
 
-    const scrollToPanel = () => {
-      const top = panel.getBoundingClientRect().top + window.scrollY - 96;
-      window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
-    };
+    restoreScroll();
+    const timers = [50, 150, 350].map((delay) => window.setTimeout(restoreScroll, delay));
 
-    const timer = window.setTimeout(scrollToPanel, 150);
-    return () => window.clearTimeout(timer);
+    return () => timers.forEach((timer) => window.clearTimeout(timer));
   }, [sent]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const scrollY = window.scrollY;
     setSubmitting(true);
     setError(null);
 
@@ -125,6 +123,7 @@ export default function Kontakt() {
       }
 
       form.reset();
+      scrollLockRef.current = scrollY;
       setSent(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Beim Senden ist ein Fehler aufgetreten.');
@@ -254,38 +253,14 @@ export default function Kontakt() {
                 visible[contactItems.length + 1] ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
             >
-              <div
-                ref={formPanelRef}
-                className="relative scroll-mt-24 overflow-hidden rounded-3xl border border-white/10 bg-white p-8 shadow-2xl shadow-black/30 sm:p-10 lg:p-12"
-              >
+              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white p-8 shadow-2xl shadow-black/30 sm:p-10 lg:p-12">
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-500/30"
                   aria-hidden
                 />
 
-                <div className="relative min-h-[28rem] sm:min-h-[32rem]">
-                {sent ? (
-                  <div className="flex min-h-[28rem] flex-col items-center justify-center py-16 text-center sm:min-h-[32rem] sm:py-20">
-                    <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl shadow-green-500/30">
-                      <Check className="h-10 w-10" strokeWidth={2.5} />
-                      <span className="absolute inset-0 animate-ping rounded-full bg-green-400/20" aria-hidden />
-                    </span>
-                    <h3 className="mt-8 text-2xl font-extrabold text-navy-900 sm:text-3xl">Vielen Dank!</h3>
-                    <p className="mt-3 max-w-md text-base leading-relaxed text-navy-500">
-                      Ihre Anfrage ist eingegangen. Wir melden uns schnellstm{'\u00f6'}glich bei Ihnen.
-                    </p>
-                    <button
-                      onClick={() => {
-                        setSent(false);
-                        setError(null);
-                      }}
-                      className="btn-secondary mt-10"
-                    >
-                      Neue Anfrage stellen
-                    </button>
-                  </div>
-                ) : (
-                  <>
+                <div className="relative">
+                  <div className={sent ? 'pointer-events-none invisible' : undefined} aria-hidden={sent}>
                     <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-accent-500">Anfrage</p>
                     <h2 className="mt-2 text-2xl font-bold text-navy-900 sm:text-3xl">Projekt anfragen</h2>
                     <p className="mt-3 text-sm text-navy-500 sm:text-base">
@@ -305,6 +280,7 @@ export default function Kontakt() {
                             type="text"
                             className={inputClass}
                             placeholder="Ihr Name"
+                            disabled={sent}
                           />
                         </div>
                         <div>
@@ -317,6 +293,7 @@ export default function Kontakt() {
                             type="text"
                             className={inputClass}
                             placeholder="Ihr Unternehmen"
+                            disabled={sent}
                           />
                         </div>
                       </div>
@@ -332,6 +309,7 @@ export default function Kontakt() {
                             type="email"
                             className={inputClass}
                             placeholder="ihre@email.de"
+                            disabled={sent}
                           />
                         </div>
                         <div>
@@ -344,6 +322,7 @@ export default function Kontakt() {
                             type="tel"
                             className={inputClass}
                             placeholder="+49 ..."
+                            disabled={sent}
                           />
                         </div>
                       </div>
@@ -351,7 +330,13 @@ export default function Kontakt() {
                         <label htmlFor="kontakt-service" className="mb-2 block text-sm font-semibold text-navy-800">
                           Leistungsbereich
                         </label>
-                        <select id="kontakt-service" name="leistungsbereich" className={inputClass} defaultValue="">
+                        <select
+                          id="kontakt-service"
+                          name="leistungsbereich"
+                          className={inputClass}
+                          defaultValue=""
+                          disabled={sent}
+                        >
                           <option value="" disabled>
                             Bitte w{'\u00e4'}hlen
                           </option>
@@ -375,6 +360,7 @@ export default function Kontakt() {
                           rows={5}
                           className={`${inputClass} resize-none`}
                           placeholder="Beschreiben Sie Ihren Bedarf ..."
+                          disabled={sent}
                         />
                       </div>
                       {error ? (
@@ -384,15 +370,41 @@ export default function Kontakt() {
                       ) : null}
                       <button
                         type="submit"
-                        disabled={submitting}
+                        disabled={submitting || sent}
                         className="group flex w-full items-center justify-center gap-2 rounded-xl bg-accent-500 px-8 py-4 text-sm font-bold uppercase tracking-wide text-white shadow-xl shadow-accent-500/25 transition-all hover:-translate-y-0.5 hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:translate-y-0"
                       >
                         {submitting ? 'Wird gesendet …' : 'Anfrage senden'}
                         <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                       </button>
                     </form>
-                  </>
-                )}
+                  </div>
+
+                  {sent ? (
+                    <div
+                      className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-white px-6 py-16 text-center sm:px-10 sm:py-20"
+                      role="status"
+                      aria-live="polite"
+                    >
+                      <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl shadow-green-500/30">
+                        <Check className="h-10 w-10" strokeWidth={2.5} />
+                        <span className="absolute inset-0 animate-ping rounded-full bg-green-400/20" aria-hidden />
+                      </span>
+                      <h3 className="mt-8 text-2xl font-extrabold text-navy-900 sm:text-3xl">Vielen Dank!</h3>
+                      <p className="mt-3 max-w-md text-base leading-relaxed text-navy-500">
+                        Ihre Anfrage ist eingegangen. Wir melden uns schnellstm{'\u00f6'}glich bei Ihnen.
+                      </p>
+                      <button
+                        onClick={() => {
+                          setSent(false);
+                          setError(null);
+                          scrollLockRef.current = null;
+                        }}
+                        className="btn-secondary mt-10"
+                      >
+                        Neue Anfrage stellen
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
