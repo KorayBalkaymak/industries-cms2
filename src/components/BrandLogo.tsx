@@ -23,11 +23,11 @@ export default function BrandLogo({ className = '', variant = 'header' }: BrandL
           aria-hidden
         />
 
-        <div className="relative flex aspect-square w-full items-center justify-center rounded-full bg-white p-2.5 shadow-[0_0_50px_rgba(255,87,34,0.45)] ring-2 ring-accent-400 sm:p-3">
+        <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-full bg-white p-2.5 shadow-[0_0_50px_rgba(255,87,34,0.45)] ring-2 ring-accent-400 sm:p-3">
           <img
             src="/images/industries-cms-logo.png"
             alt="Industries CMS – Construction Management Solution"
-            className="relative h-auto w-[94%] max-w-none object-contain"
+            className="relative h-auto w-[94%] max-w-none rounded-full object-contain"
             draggable={false}
           />
         </div>
