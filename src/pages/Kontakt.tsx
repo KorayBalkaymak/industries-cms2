@@ -84,7 +84,23 @@ export default function Kontakt() {
   const [sent, setSent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const formPanelRef = useRef<HTMLDivElement>(null);
   const { sectionRef, visible } = useReveal(contactItems.length + 2);
+
+  useEffect(() => {
+    if (!sent) return;
+
+    const panel = formPanelRef.current;
+    if (!panel) return;
+
+    const scrollToPanel = () => {
+      const top = panel.getBoundingClientRect().top + window.scrollY - 96;
+      window.scrollTo({ top: Math.max(0, top), behavior: 'auto' });
+    };
+
+    const timer = window.setTimeout(scrollToPanel, 150);
+    return () => window.clearTimeout(timer);
+  }, [sent]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -92,6 +108,9 @@ export default function Kontakt() {
     setError(null);
 
     const form = e.currentTarget;
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
 
     try {
       const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -235,14 +254,18 @@ export default function Kontakt() {
                 visible[contactItems.length + 1] ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
             >
-              <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white p-8 shadow-2xl shadow-black/30 sm:p-10 lg:p-12">
+              <div
+                ref={formPanelRef}
+                className="relative scroll-mt-24 overflow-hidden rounded-3xl border border-white/10 bg-white p-8 shadow-2xl shadow-black/30 sm:p-10 lg:p-12"
+              >
                 <div
                   className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-500 via-accent-400 to-accent-500/30"
                   aria-hidden
                 />
 
+                <div className="relative min-h-[28rem] sm:min-h-[32rem]">
                 {sent ? (
-                  <div className="flex flex-col items-center justify-center py-16 text-center sm:py-20">
+                  <div className="flex min-h-[28rem] flex-col items-center justify-center py-16 text-center sm:min-h-[32rem] sm:py-20">
                     <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl shadow-green-500/30">
                       <Check className="h-10 w-10" strokeWidth={2.5} />
                       <span className="absolute inset-0 animate-ping rounded-full bg-green-400/20" aria-hidden />
@@ -370,6 +393,7 @@ export default function Kontakt() {
                     </form>
                   </>
                 )}
+                </div>
               </div>
             </div>
           </div>
