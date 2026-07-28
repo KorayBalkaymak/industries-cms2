@@ -64,16 +64,15 @@ export default function IndustriesSection() {
         <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {industries.map((industry, index) => {
             const isVisible = visible[index];
-            const isFeatured = index === 0 || index === 3;
 
             return (
               <div
                 key={industry.title}
                 data-industry-card
                 data-index={index}
-                className={`group relative overflow-hidden rounded-2xl transition-all duration-700 ease-out ${
-                  isFeatured ? 'sm:row-span-1 lg:min-h-[17rem]' : 'min-h-[14rem]'
-                } ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}
+                className={`group relative min-h-[14rem] overflow-hidden rounded-2xl transition-all duration-700 ease-out sm:min-h-[15rem] ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                }`}
                 style={{ transitionDelay: `${index * 70}ms` }}
               >
                 <div className="home-card-glow absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden />
