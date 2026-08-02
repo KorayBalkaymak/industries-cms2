@@ -36,6 +36,11 @@ const serviceSeo: Record<string, { title: string; description: string }> = {
 
 const staticPageSeo: Record<string, { title: string; description: string }> = {
   '/': defaultSeo,
+  '/projekte': {
+    title: 'Projekte | Ersatzneubau Nagerlbrücke | Industries CMS',
+    description:
+      'Örtliche Bauleitung Stahlbau beim Ersatzneubau der Nagerlbrücke. Montage, Hebearbeiten und Qualitätsüberwachung im Brückenbau.',
+  },
   '/ueber-uns': {
     title: 'Über uns | Industries CMS – Construction Management Solution',
     description:

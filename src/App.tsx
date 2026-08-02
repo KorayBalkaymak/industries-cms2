@@ -3,6 +3,7 @@ import Layout from '@/components/Layout';
 import Home from '@/pages/Home';
 import ServiceDetail from '@/pages/ServiceDetail';
 import UeberUns from '@/pages/UeberUns';
+import Projekte from '@/pages/Projekte';
 import Kontakt from '@/pages/Kontakt';
 import Impressum from '@/pages/Impressum';
 import Datenschutz from '@/pages/Datenschutz';
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/leistungen" element={<Navigate to="/#leistungen" replace />} />
           <Route path="/leistungen/:slug" element={<ServiceDetail />} />
+          <Route path="/projekte" element={<Projekte />} />
           <Route path="/ueber-uns" element={<UeberUns />} />
           <Route path="/kontakt" element={<Kontakt />} />
           <Route path="/impressum" element={<Impressum />} />

@@ -859,6 +859,7 @@ export const company = {
 export const navItems = [
   { label: 'Startseite', to: '/' },
   { label: 'Leistungen', children: services.map((s) => ({ label: s.title, to: `/leistungen/${s.slug}` })) },
+  { label: 'Projekte', to: '/projekte' },
   { label: 'Über uns', to: '/ueber-uns' },
   { label: 'Kontakt', to: '/kontakt' },
 ];
