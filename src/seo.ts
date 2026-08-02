@@ -53,11 +53,11 @@ const staticPageSeo: Record<string, { title: string; description: string }> = {
   },
   '/impressum': {
     title: 'Impressum | Industries CMS',
-    description: 'Impressum der Construction Management Solution UG (Industries CMS), Duisburg.',
+    description: 'Impressum der Industries CMS Construction Management Solution UG, Duisburg.',
   },
   '/datenschutz': {
     title: 'Datenschutz | Industries CMS',
-    description: 'Datenschutzhinweise der Construction Management Solution UG (Industries CMS).',
+    description: 'Datenschutzhinweise der Industries CMS Construction Management Solution UG, Duisburg.',
   },
 };
 

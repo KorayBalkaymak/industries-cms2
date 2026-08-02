@@ -843,16 +843,18 @@ export const aboutHeroImage =
 
 export const company = {
   name: 'Industries CMS',
-  legalName: 'Construction Management Solution UG',
+  legalName: 'Industries CMS Construction Management Solution UG',
   owner: 'Pascal Maurice Candau Y Forner',
   address: 'Johanniterstraße 44, 47053 Duisburg',
   country: 'Deutschland',
   phone: '+49 (0)177 7452238',
   email: 'candau@industries-cms.com',
   vatId: 'DE455538894',
+  registerCourt: 'Amtsgericht Duisburg',
+  registerNumber: 'HRB 40300',
   contentResponsible: {
     name: 'Pascal Maurice Candau Y Forner',
-    address: 'Dellmannsweg 47a, 45277 Essen',
+    address: 'Johanniterstraße 44, 47053 Duisburg',
   },
 };
 

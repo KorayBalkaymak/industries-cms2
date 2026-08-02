@@ -20,10 +20,18 @@ export default function Impressum() {
             <div>
               <h2 className="text-xl font-bold text-navy-900">Angaben gemäß § 5 TMG</h2>
               <div className="mt-4 space-y-1 leading-relaxed">
-                <p className="font-semibold text-navy-900">{company.name}</p>
-                <p>Inhaber: {company.owner}</p>
+                <p className="font-semibold text-navy-900">{company.legalName}</p>
+                <p>Geschäftsführer: {company.owner}</p>
                 <p className="pt-2">{company.address}</p>
                 <p>{company.country}</p>
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-navy-900">Handelsregister</h2>
+              <div className="mt-4 space-y-1 leading-relaxed">
+                <p>Registergericht: {company.registerCourt}</p>
+                <p>Registernummer: {company.registerNumber}</p>
               </div>
             </div>
 
@@ -57,6 +65,7 @@ export default function Impressum() {
               <div className="mt-4 space-y-1 leading-relaxed">
                 <p>{company.contentResponsible.name}</p>
                 <p>{company.contentResponsible.address}</p>
+                <p>{company.country}</p>
               </div>
             </div>
 
