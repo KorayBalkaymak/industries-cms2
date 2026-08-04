@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { useState } from 'react';
 import {
   ArrowLeftRight,
   Building2,
@@ -13,6 +14,26 @@ import {
   Truck,
 } from 'lucide-react';
 import CmsHeroBackdrop from '@/components/CmsHeroBackdrop';
+import ProjectGalleryModal, { ProjectGalleryButton } from '@/components/ProjectGalleryModal';
+
+const bridgeLiftGallery = [
+  {
+    src: '/images/nagerlbruecke-einhub-1.png',
+    alt: 'Luftaufnahme der Brückensegment-Vormontage mit SPMT-Transport und Kraneinsatz',
+  },
+  {
+    src: '/images/nagerlbruecke-einhub-2.png',
+    alt: 'Einhub eines Brückensegments mit Liebherr LR 11000 über dem Fluss',
+  },
+  {
+    src: '/images/nagerlbruecke-einhub-3.png',
+    alt: 'Montage der Brückensegmente mit Großkran an der Nagerlbrücke',
+  },
+  {
+    src: '/images/nagerlbruecke-einhub-4.png',
+    alt: 'Präziser Einhub eines Brückensegments am Ersatzneubau Nagerlbrücke',
+  },
+];
 
 const projectData = {
   projectFacts: [
@@ -47,6 +68,8 @@ function InfoSection({ title, children }: { title: string; children: ReactNode }
 }
 
 export default function Projekte() {
+  const [galleryOpen, setGalleryOpen] = useState(false);
+
   return (
     <>
       <section className="relative overflow-visible">
@@ -109,28 +132,18 @@ export default function Projekte() {
                 </p>
               </div>
 
-              <div className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-navy-900/40 shadow-xl shadow-black/25">
-                <div className="relative aspect-[16/9] overflow-hidden">
-                  <img
-                    src="/images/infrastruktur.png"
-                    alt="Brückenbau und Infrastrukturprojekt"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/35 to-transparent" />
-                </div>
-                <div className="p-6 sm:p-8">
-                  <h3 className="text-lg font-bold uppercase tracking-[0.18em] text-white sm:text-xl">
-                    Einhub der Brückensegmente
-                  </h3>
-                  <p className="mt-4 text-base leading-relaxed text-navy-200 sm:text-lg">
-                    Die beiden Randsegmente wurden mit einem Liebherr LR 11000, dem derzeit größten Raupenkran der
-                    Schweiz, präzise eingehoben. Das 64 Meter lange Mittelsegment wurde mithilfe von zwei
-                    SPMT-Modulfahrzeugen in seine Endposition verfahren und anschließend millimetergenau montiert. Diese
-                    komplexen Hebe- und Montagearbeiten erforderten höchste Präzision, eine detaillierte Planung und eine
-                    enge Abstimmung aller beteiligten Unternehmen.
-                  </p>
-                </div>
+              <div className="mt-12 rounded-2xl border border-white/10 bg-navy-900/40 p-6 shadow-xl shadow-black/25 sm:p-8">
+                <h3 className="text-lg font-bold uppercase tracking-[0.18em] text-white sm:text-xl">
+                  Einhub der Brückensegmente
+                </h3>
+                <p className="mt-4 text-base leading-relaxed text-navy-200 sm:text-lg">
+                  Die beiden Randsegmente wurden mit einem Liebherr LR 11000, dem derzeit größten Raupenkran der
+                  Schweiz, präzise eingehoben. Das 64 Meter lange Mittelsegment wurde mithilfe von zwei
+                  SPMT-Modulfahrzeugen in seine Endposition verfahren und anschließend millimetergenau montiert. Diese
+                  komplexen Hebe- und Montagearbeiten erforderten höchste Präzision, eine detaillierte Planung und eine
+                  enge Abstimmung aller beteiligten Unternehmen.
+                </p>
+                <ProjectGalleryButton onClick={() => setGalleryOpen(true)} />
               </div>
 
               <div className="mt-12">
@@ -218,6 +231,13 @@ export default function Projekte() {
           </div>
         </div>
       </section>
+
+      <ProjectGalleryModal
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        title="Einhub der Brückensegmente"
+        images={bridgeLiftGallery}
+      />
     </>
   );
 }
