@@ -49,21 +49,30 @@ function InfoSection({ title, children }: { title: string; children: ReactNode }
 export default function Projekte() {
   return (
     <>
-      <section className="relative flex min-h-[58vh] items-center overflow-hidden">
-        <div className="absolute inset-0">
+      <section className="relative overflow-visible">
+        <div className="absolute inset-0 min-h-full">
           <CmsHeroBackdrop />
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy-950 to-transparent" aria-hidden />
 
-        <div className="container-px relative w-full py-20 sm:py-24">
+        <div className="container-px relative z-10 w-full py-16 sm:py-24">
           <div className="max-w-4xl animate-fade-up">
             <p className="section-eyebrow">Projekte</p>
-            <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
+            <h1 className="text-3xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
               ERSATZNEUBAU NAGERLBRÜCKE
             </h1>
-            <p className="mt-5 text-xl font-bold text-accent-500 sm:text-2xl">
+            <p className="mt-4 text-lg font-bold text-accent-500 sm:mt-5 sm:text-2xl">
               Örtliche Bauleitung Stahlbau | Brückenbau
             </p>
+            <div className="relative z-10 mt-6 overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30 sm:mt-8">
+              <img
+                src="/images/nagerlbruecke-brueckenbau.png"
+                alt="Brückenbau am Ersatzneubau der Nagerlbrücke mit Stahlbau-Montage und Kraneinsatz"
+                className="block aspect-[4/3] w-full object-cover sm:aspect-[16/9]"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
             <div className="mt-6 h-1 w-24 rounded-full bg-gradient-to-r from-accent-500 via-accent-400 to-transparent" />
           </div>
         </div>
